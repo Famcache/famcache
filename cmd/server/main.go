@@ -13,7 +13,7 @@ func main() {
 
 	cache := cache.NewCache()
 	options := server.ServerOptions{
-		Port:   config.Port,
+		Port:   config.GetPort(),
 		Logger: logger.NewLogger(),
 		Cache:  cache,
 	}

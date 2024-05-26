@@ -5,6 +5,9 @@
 cleanup: ## Cleanup the project
 	@rm -rf bin
 
+test: ## Run the tests
+	@go test -v ./pkg/...
+
 run-server: ## Run the famcache server
 	@go run cmd/server/main.go
 

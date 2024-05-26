@@ -1,14 +1,21 @@
 package config
 
-import "flag"
+import (
+	"famcache/domain/config"
+	"flag"
+)
 
 type Config struct {
 	Port string
 }
 
+func (c *Config) GetPort() string {
+	return c.Port
+}
+
 // NewConfig creates a new configuration
 // Reads the port from command line arguments
-func NewConfig() *Config {
+func NewConfig() config.FamcacheConfig {
 	port := flag.String("port", "3577", "Port to run the server on")
 	flag.Parse()
 
