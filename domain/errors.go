@@ -17,4 +17,8 @@ var (
 	ErrErrorGettingKey = errors.New("error getting key")
 	// ErrUnableToProcessRequest is an error that occurs when the server is unable to process a request
 	ErrUnableToProcessRequest = errors.New("unable to process request")
+	// ErrInvalidTTL is an error that occurs when the TTL is invalid
+	ErrInvalidTTL = errors.New("invalid TTL")
+	// ErrCacheStart is an error that occurs when the cache fails to start
+	ErrCacheStart = errors.New("failed to start cache")
 )

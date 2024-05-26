@@ -7,6 +7,8 @@ func (s *Server) handleGet(conn net.Conn, parts []string) {
 		s.logger.Error("Invalid GET request")
 
 		s.replyError(conn, "Invalid GET request")
+
+		return
 	}
 
 	key := parts[1]

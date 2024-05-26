@@ -8,10 +8,11 @@ import (
 // handleSet handles the SET command
 // set <key> <value> <ttl>
 func (s *Server) handleSet(conn net.Conn, parts []string) {
-	if len(parts) != 3 {
+	if len(parts) < 3 {
 		s.logger.Error("Invalid SET request")
 
 		s.replyError(conn, "Invalid SET request")
+		return
 	}
 
 	key := parts[1]
@@ -33,6 +34,8 @@ func (s *Server) handleSet(conn net.Conn, parts []string) {
 		s.logger.Error("Error setting key")
 
 		s.replyError(conn, err.Error())
+
+		return
 	}
 
 	s.logger.Info("SET", key, value)

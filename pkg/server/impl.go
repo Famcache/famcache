@@ -19,6 +19,12 @@ func (s *Server) Start() error {
 
 	s.listener = listener
 
+	err = s.cache.Start()
+
+	if err != nil {
+		return domain.ErrCacheStart
+	}
+
 	for {
 		conn, err := s.listener.Accept()
 

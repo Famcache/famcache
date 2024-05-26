@@ -7,6 +7,8 @@ func (s *Server) handleDelete(conn net.Conn, parts []string) {
 		s.logger.Error("Invalid DELETE request")
 
 		s.replyError(conn, "Invalid DELETE request")
+
+		return
 	}
 
 	key := parts[1]
@@ -17,6 +19,8 @@ func (s *Server) handleDelete(conn net.Conn, parts []string) {
 		s.logger.Error("Error deleting key")
 
 		s.replyError(conn, err.Error())
+
+		return
 	}
 
 	s.logger.Info("DELETE", key)
