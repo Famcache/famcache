@@ -16,7 +16,6 @@ type StoredValue struct {
 func NewStoredValue(value string, ttl *string) (*StoredValue, error) {
 	var ttlInt64 *int64
 
-	println("How many times ?")
 	if ttl != nil {
 		ttlInt64 = new(int64)
 		ttlConverted, err := strconv.ParseInt(strings.TrimSpace(*ttl), 10, 64)
