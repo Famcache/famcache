@@ -2,9 +2,7 @@ package server
 
 import (
 	"bufio"
-	"famcache/domain/server"
 	"net"
-	"strings"
 )
 
 func (s *Server) handle(conn net.Conn) {
@@ -18,20 +16,20 @@ func (s *Server) handle(conn net.Conn) {
 			return
 		}
 
-		parts := strings.Fields(strings.TrimSpace(request))
+		query := NewQuery(request)
 
-		if len(parts) == 0 {
+		if query == nil {
 			s.logger.Error("Empty request")
 			continue
 		}
 
-		switch parts[0] {
-		case server.CommandGet:
-			s.handleGet(conn, parts)
-		case server.CommandSet:
-			s.handleSet(conn, parts)
-		case server.CommandDelete:
-			s.handleDelete(conn, parts)
+		switch query.Type {
+		case QueryTypeGet:
+			s.handleGet(conn, query)
+		case QueryTypeSet:
+			s.handleSet(conn, query)
+		case QueryTypeDelete:
+			s.handleDelete(conn, query)
 		default:
 			println("Invalid command")
 		}

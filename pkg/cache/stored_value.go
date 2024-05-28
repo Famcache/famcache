@@ -1,9 +1,6 @@
 package cache
 
 import (
-	"famcache/domain"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -13,23 +10,10 @@ type StoredValue struct {
 	CreatedAt int64
 }
 
-func NewStoredValue(value string, ttl *string) (*StoredValue, error) {
-	var ttlInt64 *int64
-
-	if ttl != nil {
-		ttlInt64 = new(int64)
-		ttlConverted, err := strconv.ParseInt(strings.TrimSpace(*ttl), 10, 64)
-
-		if err != nil {
-			return nil, domain.ErrInvalidTTL
-		}
-
-		*ttlInt64 = ttlConverted
-	}
-
+func NewStoredValue(value string, ttl *int64) (*StoredValue, error) {
 	return &StoredValue{
 		Value:     value,
-		TTL:       ttlInt64,
+		TTL:       ttl,
 		CreatedAt: time.Now().Unix(),
 	}, nil
 }

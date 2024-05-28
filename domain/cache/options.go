@@ -4,5 +4,5 @@ package cache
 type SetOptions struct {
 	Key   string
 	Value string
-	TTL   *string
+	TTL   *int64
 }

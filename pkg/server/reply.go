@@ -2,18 +2,20 @@ package server
 
 import "net"
 
-func (s *Server) replyOK(conn net.Conn, response string) {
-	message := "OK: " + response
+func (q *Query) replyOK(conn net.Conn, response string) {
+	message := q.ID + " OK " + response + "\n"
 
-	conn.Write([]byte(message + "\n"))
+	conn.Write([]byte(message))
 }
 
-func (s *Server) replySuccess(conn net.Conn) {
-	conn.Write([]byte("OK" + "\n"))
+func (q *Query) replySuccess(conn net.Conn) {
+	message := q.ID + " OK" + "\n"
+
+	conn.Write([]byte(message))
 }
 
-func (s *Server) replyError(conn net.Conn, response string) {
-	message := "ERROR: " + response
+func (q *Query) replyError(conn net.Conn, response string) {
+	message := q.ID + " ERROR: " + response + "\n"
 
-	conn.Write([]byte(message + "\n"))
+	conn.Write([]byte(message))
 }
