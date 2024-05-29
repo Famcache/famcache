@@ -4,6 +4,6 @@
 ### Docker Image
 
 ```bash
-$ docker pull shahen94/famcache:latest
-$ docker run -d 3577:3577 shahen94/famcache:latest
+$ docker pull shahen/famcache:latest
+$ docker run -d 3577:3577 shahen/famcache:latest
 ```
