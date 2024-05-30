@@ -32,11 +32,11 @@ func (s *Server) Start() error {
 			return domain.ErrServerAccept
 		}
 
-		id := s.AddPeer(&conn)
+		peer := s.AddPeer(&conn)
 
-		s.logger.Info("New client connected: " + id)
+		s.logger.Info("New client connected: " + peer.ID())
 
-		go s.handle(conn)
+		go s.handle(peer)
 	}
 }
 

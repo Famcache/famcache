@@ -7,8 +7,9 @@ import (
 )
 
 type Peer struct {
-	id   string
-	conn net.Conn
+	id            string
+	conn          net.Conn
+	subscriptions Subscriptions
 }
 
 func (p *Peer) ID() string {
@@ -21,6 +22,7 @@ func (p *Peer) Conn() net.Conn {
 
 func NewPeer(conn net.Conn) *Peer {
 	id := uuid.NewString()
+	subscriptions := NewSubscription()
 
-	return &Peer{id, conn}
+	return &Peer{id, conn, subscriptions}
 }

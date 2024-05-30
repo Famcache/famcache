@@ -5,9 +5,9 @@ import (
 	"net"
 )
 
-func (s *Server) AddPeer(conn *net.Conn) string {
+func (s *Server) AddPeer(conn *net.Conn) *peers.Peer {
 	peer := peers.NewPeer(*conn)
 	s.peers = append(s.peers, *peer)
 
-	return peer.ID()
+	return peer
 }

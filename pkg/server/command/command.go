@@ -22,7 +22,7 @@ func (c *AbstractCommand) ToStoreCommand() *StoreCommand {
 	return NewStoreCommand(c.cType, c.query)
 }
 
-func (c *AbstractCommand) ToPubsubCommand() *PubsubCommand {
+func (c *AbstractCommand) ToPubsubCommand() *MessagingCommand {
 	return NewPubsubCommand(c.cType, c.query)
 }
 
@@ -30,8 +30,8 @@ func (c *AbstractCommand) IsStoreCommand() bool {
 	return c.cType == CommandSet || c.cType == CommandGet || c.cType == CommandDelete
 }
 
-func (c *AbstractCommand) IsPublishCommand() bool {
-	return c.cType == CommandPublish || c.cType == CommandSubscribe
+func (c *AbstractCommand) IsMessagingCommand() bool {
+	return c.cType == CommandPublish || c.cType == CommandSubscribe || c.cType == CommandUnsubscribe
 }
 
 func determineCommandType(query string) (CommandType, bool) {

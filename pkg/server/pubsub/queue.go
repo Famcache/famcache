@@ -1,6 +1,8 @@
 package pubsub
 
-import "famcache/domain/pubsub"
+import (
+	"famcache/domain/pubsub"
+)
 
 type PubsubQueue struct {
 	messages []pubsub.Message

@@ -3,12 +3,11 @@ package server
 import (
 	"bufio"
 	"famcache/pkg/server/command"
-	"fmt"
-	"net"
+	"famcache/pkg/server/peers"
 )
 
-func (s *Server) handle(conn net.Conn) {
-	reader := bufio.NewReader(conn)
+func (s *Server) handle(peer *peers.Peer) {
+	reader := bufio.NewReader(peer.Conn())
 
 	for {
 		request, err := reader.ReadString('\n')
@@ -34,22 +33,13 @@ func (s *Server) handle(conn net.Conn) {
 		if com.IsStoreCommand() {
 			query := com.ToStoreCommand()
 
-			switch query.Type {
-			case command.CommandGet:
-				s.handleGet(conn, query)
-			case command.CommandSet:
-				s.handleSet(conn, query)
-			case command.CommandDelete:
-				s.handleDelete(conn, query)
-			default:
-				println("Invalid command")
-			}
+			s.handleStoreCommand(peer, query)
 		}
 
-		if com.IsPublishCommand() {
+		if com.IsMessagingCommand() {
 			action := com.ToPubsubCommand()
 
-			fmt.Println(action)
+			s.handleMessagingCommand(peer, action)
 		}
 	}
 }

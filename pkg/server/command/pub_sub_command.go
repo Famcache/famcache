@@ -2,14 +2,14 @@ package command
 
 import "strings"
 
-type PubsubCommand struct {
+type MessagingCommand struct {
 	ID    string
 	Type  CommandType
 	Topic string
 	Data  string
 }
 
-func NewPubsubCommand(commandType CommandType, query string) *PubsubCommand {
+func NewPubsubCommand(commandType CommandType, query string) *MessagingCommand {
 	parts := strings.Fields(strings.TrimSpace(query))
 
 	if len(parts) < 3 {
@@ -29,7 +29,7 @@ func NewPubsubCommand(commandType CommandType, query string) *PubsubCommand {
 		}
 	}
 
-	return &PubsubCommand{
+	return &MessagingCommand{
 		ID:    queryId,
 		Topic: topic,
 		Type:  commandType,

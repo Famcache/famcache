@@ -7,6 +7,7 @@ const (
 	CommandSet    CommandType = "SET"
 	CommandDelete CommandType = "DELETE"
 
-	CommandPublish   CommandType = "PUBLISH"
-	CommandSubscribe CommandType = "SUBSCRIBE"
+	CommandPublish     CommandType = "PUBLISH"
+	CommandSubscribe   CommandType = "SUBSCRIBE"
+	CommandUnsubscribe CommandType = "UNSUBSCRIBE"
 )
