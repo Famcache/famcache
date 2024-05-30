@@ -2,6 +2,8 @@ package server
 
 import (
 	"bufio"
+	"famcache/pkg/server/command"
+	"fmt"
 	"net"
 )
 
@@ -16,22 +18,38 @@ func (s *Server) handle(conn net.Conn) {
 			return
 		}
 
-		query := NewQuery(request)
+		println("Request: ", request)
+		com, err := command.NewCommand(request)
 
-		if query == nil {
+		if err != nil {
+			s.logger.Error("Error parsing request")
+			continue
+		}
+
+		if com == nil {
 			s.logger.Error("Empty request")
 			continue
 		}
 
-		switch query.Type {
-		case QueryTypeGet:
-			s.handleGet(conn, query)
-		case QueryTypeSet:
-			s.handleSet(conn, query)
-		case QueryTypeDelete:
-			s.handleDelete(conn, query)
-		default:
-			println("Invalid command")
+		if com.IsStoreCommand() {
+			query := com.ToStoreCommand()
+
+			switch query.Type {
+			case command.CommandGet:
+				s.handleGet(conn, query)
+			case command.CommandSet:
+				s.handleSet(conn, query)
+			case command.CommandDelete:
+				s.handleDelete(conn, query)
+			default:
+				println("Invalid command")
+			}
+		}
+
+		if com.IsPublishCommand() {
+			action := com.ToPubsubCommand()
+
+			fmt.Println(action)
 		}
 	}
 }

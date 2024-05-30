@@ -1,17 +1,20 @@
 package server
 
-import "net"
+import (
+	"famcache/pkg/server/command"
+	"net"
+)
 
-func (s *Server) handleGet(conn net.Conn, query *Query) {
+func (s *Server) handleGet(conn net.Conn, query *command.StoreCommand) {
 	value, err := s.cache.Get(query.Key)
 
 	if err != nil {
 		s.logger.Error("Error getting key")
 
-		query.replyError(conn, err.Error())
+		query.ReplyError(conn, err.Error())
 	}
 
 	s.logger.Info("GET", query.Key, value)
 
-	query.replyOK(conn, value)
+	query.ReplyOK(conn, value)
 }

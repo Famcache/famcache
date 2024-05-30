@@ -1,12 +1,12 @@
-package server
+package command
 
 import (
 	"testing"
 )
 
-func TestNewQuery_Set(t *testing.T) {
+func TestNewCommand_Set(t *testing.T) {
 	query := "1 SET key value 3000"
-	q := NewQuery(query)
+	q := NewStoreCommand(CommandSet, query)
 
 	if q == nil {
 		t.Error("Query is nil")
@@ -16,7 +16,7 @@ func TestNewQuery_Set(t *testing.T) {
 		t.Errorf("Expected ID to be 1, got %s", q.ID)
 	}
 
-	if q.Type != QueryTypeSet {
+	if q.Type != CommandSet {
 		t.Errorf("Expected type to be SET, got %s", q.Type)
 	}
 
@@ -41,9 +41,9 @@ func TestNewQuery_Set(t *testing.T) {
 	}
 }
 
-func TestNewQuery_Get(t *testing.T) {
+func TestNewCommand_Get(t *testing.T) {
 	query := "1 GET key"
-	q := NewQuery(query)
+	q := NewStoreCommand(CommandGet, query)
 
 	if q == nil {
 		t.Error("Query is nil")
@@ -53,7 +53,7 @@ func TestNewQuery_Get(t *testing.T) {
 		t.Errorf("Expected ID to be 1, got %s", q.ID)
 	}
 
-	if q.Type != QueryTypeGet {
+	if q.Type != CommandGet {
 		t.Errorf("Expected type to be GET, got %s", q.Type)
 	}
 
@@ -70,9 +70,9 @@ func TestNewQuery_Get(t *testing.T) {
 	}
 }
 
-func TestNewQuery_Delete(t *testing.T) {
+func TestNewCommand_Delete(t *testing.T) {
 	query := "1 DELETE key"
-	q := NewQuery(query)
+	q := NewStoreCommand(CommandDelete, query)
 
 	if q == nil {
 		t.Error("Query is nil")
@@ -82,7 +82,7 @@ func TestNewQuery_Delete(t *testing.T) {
 		t.Errorf("Expected ID to be 1, got %s", q.ID)
 	}
 
-	if q.Type != QueryTypeDelete {
+	if q.Type != CommandDelete {
 		t.Errorf("Expected type to be DELETE, got %s", q.Type)
 	}
 
@@ -96,14 +96,5 @@ func TestNewQuery_Delete(t *testing.T) {
 
 	if q.TTL != nil {
 		t.Error("TTL is not nil")
-	}
-}
-
-func TestNewQuery_InvalidType(t *testing.T) {
-	query := "1 INVALID key"
-	q := NewQuery(query)
-
-	if q != nil {
-		t.Error("Query is not nil")
 	}
 }
