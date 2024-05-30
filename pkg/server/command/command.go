@@ -6,11 +6,12 @@ import (
 )
 
 var strToCommandType = map[string]CommandType{
-	"GET":       CommandGet,
-	"SET":       CommandSet,
-	"DELETE":    CommandDelete,
-	"PUBLISH":   CommandPublish,
-	"SUBSCRIBE": CommandSubscribe,
+	"GET":         CommandGet,
+	"SET":         CommandSet,
+	"DELETE":      CommandDelete,
+	"PUBLISH":     CommandPublish,
+	"SUBSCRIBE":   CommandSubscribe,
+	"UNSUBSCRIBE": CommandUnsubscribe,
 }
 
 type AbstractCommand struct {
