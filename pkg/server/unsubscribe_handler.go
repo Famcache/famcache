@@ -2,8 +2,13 @@ package server
 
 import (
 	"famcache/pkg/server/command"
-	"net"
+	"famcache/pkg/server/peers"
 )
 
-func (s *Server) handleUnsubscribe(conn net.Conn, query *command.MessagingCommand) {
+func (s *Server) handleUnsubscribe(peer *peers.Peer, query *command.MessagingCommand) {
+	s.logger.Info("Peer" + peer.ID() + " unsubscribed from topic " + query.Topic)
+
+	sub := peer.Subscriptions()
+
+	sub.Remove(query.Topic)
 }

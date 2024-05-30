@@ -8,11 +8,11 @@ import (
 func (s *Server) handleMessagingCommand(peer *peers.Peer, com *command.MessagingCommand) {
 	switch com.Type {
 	case command.CommandPublish:
-		s.handlePublish(peer.Conn(), com)
+		s.handlePublish(peer, com)
 	case command.CommandSubscribe:
-		s.handleSubscribe(peer.Conn(), com)
+		s.handleSubscribe(peer, com)
 	case command.CommandUnsubscribe:
-		s.handleUnsubscribe(peer.Conn(), com)
+		s.handleUnsubscribe(peer, com)
 	default:
 		println("Invalid command")
 	}

@@ -2,9 +2,13 @@ package server
 
 import (
 	"famcache/pkg/server/command"
-	"net"
+	"famcache/pkg/server/peers"
 )
 
-func (s *Server) handleSubscribe(conn net.Conn, query *command.MessagingCommand) {
-	s.logger.Info("SUBSCRIBE", query.Topic)
+func (s *Server) handleSubscribe(peer *peers.Peer, query *command.MessagingCommand) {
+	s.logger.Info("Peer" + peer.ID() + " subscribed to the topic: " + query.Topic)
+
+	sub := peer.Subscriptions()
+
+	sub.Add(query.Topic)
 }
