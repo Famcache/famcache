@@ -3,12 +3,14 @@ package pubsub
 import "famcache/domain/pubsub"
 
 type PubsubMessage struct {
+	to    string
 	topic string
 	data  string
 }
 
-func NewPubsubMessage(topic string, data string) pubsub.Message {
+func NewPubsubMessage(to, topic, data string) pubsub.Message {
 	return &PubsubMessage{
+		to,
 		topic,
 		data,
 	}

@@ -3,6 +3,7 @@ package server
 import (
 	"famcache/pkg/server/command"
 	"famcache/pkg/server/peers"
+	"famcache/pkg/server/pubsub"
 )
 
 func (s *Server) handlePublish(peer *peers.Peer, message *command.MessagingCommand) {
@@ -13,6 +14,14 @@ func (s *Server) handlePublish(peer *peers.Peer, message *command.MessagingComma
 			continue
 		}
 
-		p.Publish(message.Topic, message.Data)
+		// Try to publish the message to the peer immediately
+		// If the peer is not available, keep the message in the queue
+		// and retry later
+		err := p.Publish(message.Topic, message.Data)
+
+		if err != nil {
+			// TODO: Retry logic
+			s.messagingQueue.Retry(pubsub.NewPubsubMessage(peer.ID(), message.Topic, message.Data))
+		}
 	}
 }
