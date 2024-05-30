@@ -40,6 +40,7 @@ func determineQueryType(queryType string) (QueryType, bool) {
 func NewQuery(query string) *Query {
 	parts := strings.Fields(strings.TrimSpace(query))
 
+	println(query)
 	if len(parts) < 3 {
 		return nil
 	}

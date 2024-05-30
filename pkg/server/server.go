@@ -4,6 +4,7 @@ import (
 	"famcache/domain/cache"
 	"famcache/domain/logger"
 	"famcache/domain/server"
+	"famcache/pkg/server/peers"
 	"net"
 )
 
@@ -13,6 +14,7 @@ type Server struct {
 	port     string
 	logger   logger.Logger
 	cache    cache.Cache
+	peers    []peers.Peer
 }
 
 // NewServer creates a new server
@@ -21,5 +23,6 @@ func NewServer(options ServerOptions) server.FamcacheServer {
 		port:   options.Port,
 		logger: options.Logger,
 		cache:  options.Cache,
+		peers:  make([]peers.Peer, 0),
 	}
 }
