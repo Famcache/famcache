@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"famcache/pkg/server/command"
 	"famcache/pkg/server/peers"
+	"io"
 )
 
 func (s *Server) handle(peer *peers.Peer) {
@@ -13,11 +14,15 @@ func (s *Server) handle(peer *peers.Peer) {
 		request, err := reader.ReadString('\n')
 
 		if err != nil {
+			if err == io.EOF {
+				s.peers.Remove(peer)
+				return
+			}
+
 			s.logger.Error("Error reading request")
 			return
 		}
 
-		println("Request: ", request)
 		com, err := command.NewCommand(request)
 
 		if err != nil {

@@ -16,7 +16,7 @@ type Server struct {
 	port           string
 	logger         logger.Logger
 	cache          cache.Cache
-	peers          []peers.Peer
+	peers          peers.PeersManager
 	messagingQueue pubsub.Queue
 }
 
@@ -26,7 +26,7 @@ func NewServer(options ServerOptions) server.FamcacheServer {
 		port:           options.Port,
 		logger:         options.Logger,
 		cache:          options.Cache,
-		peers:          make([]peers.Peer, 0),
+		peers:          peers.NewPeersManager(),
 		messagingQueue: queue.NewPubsubQueue(),
 	}
 }
