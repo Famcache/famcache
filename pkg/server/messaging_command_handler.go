@@ -1,12 +1,12 @@
 package server
 
 import (
+	"famcache/domain/command"
 	"famcache/domain/connection"
-	"famcache/pkg/server/command"
 )
 
-func (s *Server) handleMessagingCommand(peer connection.Peer, com *command.MessagingCommand) {
-	switch com.Type {
+func (s *Server) handleMessagingCommand(peer connection.Peer, com command.MessagingCommand) {
+	switch com.Type() {
 	case command.CommandPublish:
 		s.actor.Publish(peer, com)
 	case command.CommandSubscribe:
