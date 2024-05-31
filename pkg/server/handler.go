@@ -2,12 +2,12 @@ package server
 
 import (
 	"bufio"
+	"famcache/domain/connection"
 	"famcache/pkg/server/command"
-	"famcache/pkg/server/peers"
 	"io"
 )
 
-func (s *Server) handle(peer *peers.Peer) {
+func (s *Server) handle(peer connection.Peer) {
 	reader := bufio.NewReader(peer.Conn())
 
 	for {
@@ -15,7 +15,7 @@ func (s *Server) handle(peer *peers.Peer) {
 
 		if err != nil {
 			if err == io.EOF {
-				s.peers.Remove(peer)
+				(*s.actor.Peers()).Remove(peer)
 				return
 			}
 

@@ -1,18 +1,18 @@
 package server
 
 import (
+	"famcache/domain/connection"
 	"famcache/pkg/server/command"
-	"famcache/pkg/server/peers"
 )
 
-func (s *Server) handleStoreCommand(peer *peers.Peer, com *command.StoreCommand) {
+func (s *Server) handleStoreCommand(peer connection.Peer, com *command.StoreCommand) {
 	switch com.Type {
 	case command.CommandGet:
-		s.handleGet(peer.Conn(), com)
+		s.actor.Get(peer.Conn(), com)
 	case command.CommandSet:
-		s.handleSet(peer.Conn(), com)
+		s.actor.Set(peer.Conn(), com)
 	case command.CommandDelete:
-		s.handleDelete(peer.Conn(), com)
+		s.actor.Delete(peer.Conn(), com)
 	default:
 		println("Invalid command")
 	}
