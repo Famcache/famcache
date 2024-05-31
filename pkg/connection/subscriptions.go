@@ -1,4 +1,4 @@
-package peers
+package connection
 
 type Subscriptions struct {
 	inner map[string]bool

@@ -3,30 +3,28 @@ package server
 import (
 	"famcache/domain/cache"
 	"famcache/domain/logger"
-	"famcache/domain/pubsub"
 	"famcache/domain/server"
-	"famcache/pkg/server/peers"
-	queue "famcache/pkg/server/pubsub"
+	"famcache/pkg/server/actor"
 	"net"
 )
 
 // Server is a struct that represents a server
 type Server struct {
-	listener       net.Listener
-	port           string
-	logger         logger.Logger
-	cache          cache.Cache
-	peers          peers.PeersManager
-	messagingQueue pubsub.Queue
+	listener net.Listener
+	port     string
+	logger   logger.Logger
+	cache    cache.Cache
+	actor    actor.Actor
 }
 
 // NewServer creates a new server
 func NewServer(options ServerOptions) server.FamcacheServer {
+	actors := actor.NewActor(&options.Logger, &options.Cache)
+
 	return &Server{
-		port:           options.Port,
-		logger:         options.Logger,
-		cache:          options.Cache,
-		peers:          peers.NewPeersManager(),
-		messagingQueue: queue.NewPubsubQueue(),
+		port:   options.Port,
+		logger: options.Logger,
+		cache:  options.Cache,
+		actor:  actors,
 	}
 }
