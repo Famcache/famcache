@@ -9,7 +9,7 @@ import (
 func (s *Server) handlePublish(peer *peers.Peer, message *command.MessagingCommand) {
 	s.logger.Info("Peer " + peer.ID() + " published topic " + message.Topic)
 
-	for _, p := range s.peers {
+	for _, p := range *s.peers.All() {
 		if p.ID() == peer.ID() {
 			continue
 		}
