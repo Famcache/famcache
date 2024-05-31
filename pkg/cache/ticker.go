@@ -16,10 +16,8 @@ func (c *Cache) CleanupExpired() {
 			// Calculate the time passed since the stored value was created
 			elapsed := time.Now().Unix() - storedValue.CreatedAt
 
-			println("Elapsed", elapsed)
 			// Check if the stored value has expired
 			if elapsed >= int64(*storedValue.TTL)/1000 {
-				println("Removing key", key)
 				delete(c.storage, key)
 			}
 		}
