@@ -34,5 +34,8 @@ func (m *PubsubMessage) IncrementRetryCount() {
 }
 
 func (m *PubsubMessage) ToMessagingCommand() command.MessagingCommand {
-	return cmd.NewPubsubCommand(command.CommandPublish, m.data)
+	query := cmd.PublishCommand("internal", m.Topic(), m.Data())
+
+	println("Query", query)
+	return cmd.NewPubsubCommand(command.CommandPublish, query)
 }
