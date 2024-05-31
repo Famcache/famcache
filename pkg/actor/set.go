@@ -2,18 +2,18 @@ package actor
 
 import (
 	"famcache/domain/cache"
-	"famcache/pkg/server/command"
+	"famcache/domain/command"
 	"net"
 )
 
-func (actor *Actor) Set(conn net.Conn, query *command.StoreCommand) {
+func (actor *Actor) Set(conn net.Conn, query command.StoreCommand) {
 	sCache := *actor.cache
 	logger := *actor.logger
 
 	err := sCache.Set(cache.SetOptions{
-		Key:   query.Key,
-		Value: *query.Value,
-		TTL:   query.TTL,
+		Key:   query.Key(),
+		Value: *query.Value(),
+		TTL:   query.TTL(),
 	})
 
 	if err != nil {
@@ -24,7 +24,7 @@ func (actor *Actor) Set(conn net.Conn, query *command.StoreCommand) {
 		return
 	}
 
-	logger.Info("SET", query.Key, *query.Value)
+	logger.Info("SET", query.Key(), *query.Value())
 
 	query.ReplySuccess(conn)
 }

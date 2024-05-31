@@ -1,15 +1,15 @@
 package actor
 
 import (
-	"famcache/pkg/server/command"
+	"famcache/domain/command"
 	"net"
 )
 
-func (actor *Actor) Get(conn net.Conn, query *command.StoreCommand) {
+func (actor *Actor) Get(conn net.Conn, query command.StoreCommand) {
 	sCache := *actor.cache
 	logger := *actor.logger
 
-	value, err := sCache.Get(query.Key)
+	value, err := sCache.Get(query.Key())
 
 	if err != nil {
 		logger.Error("Error getting key")
@@ -17,7 +17,7 @@ func (actor *Actor) Get(conn net.Conn, query *command.StoreCommand) {
 		query.ReplyError(conn, err.Error())
 	}
 
-	logger.Info("GET", query.Key, value)
+	logger.Info("GET", query.Key(), value)
 
 	query.ReplyOK(conn, value)
 }

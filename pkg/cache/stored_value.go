@@ -6,11 +6,11 @@ import (
 
 type StoredValue struct {
 	Value     string
-	TTL       *int64
+	TTL       *uint64
 	CreatedAt int64
 }
 
-func NewStoredValue(value string, ttl *int64) (*StoredValue, error) {
+func NewStoredValue(value string, ttl *uint64) (*StoredValue, error) {
 	return &StoredValue{
 		Value:     value,
 		TTL:       ttl,

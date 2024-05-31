@@ -1,6 +1,9 @@
 package command
 
-import "testing"
+import (
+	"famcache/domain/command"
+	"testing"
+)
 
 func TestNewCommand_GET(t *testing.T) {
 	com, ok := NewCommand("id GET key")
@@ -16,19 +19,19 @@ func TestNewCommand_GET(t *testing.T) {
 		t.Error("Expected a store command")
 	}
 
-	if com.cType != CommandGet {
+	if com.cType != command.CommandGet {
 		t.Error("Expected a GET command")
 	}
 
-	if com.ToStoreCommand().Key != "key" {
+	if com.ToStoreCommand().Key() != "key" {
 		t.Error("Expected key to be 'key'")
 	}
 
-	if com.ToStoreCommand().Value != nil {
+	if com.ToStoreCommand().Value() != nil {
 		t.Error("Expected value to be nil")
 	}
 
-	if com.ToStoreCommand().ID != "id" {
+	if com.ToStoreCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }
@@ -47,23 +50,23 @@ func TestNewCommand_SET(t *testing.T) {
 		t.Error("Expected a store command")
 	}
 
-	if com.cType != CommandSet {
+	if com.cType != command.CommandSet {
 		t.Error("Expected a SET command")
 	}
 
-	if com.ToStoreCommand().Key != "key" {
+	if com.ToStoreCommand().Key() != "key" {
 		t.Error("Expected key to be 'key'")
 	}
 
-	if *com.ToStoreCommand().Value != "value" {
+	if *com.ToStoreCommand().Value() != "value" {
 		t.Error("Expected value to be 'value'")
 	}
 
-	if *com.ToStoreCommand().TTL != 0 {
+	if *com.ToStoreCommand().TTL() != 0 {
 		t.Error("Expected ttl to be 0")
 	}
 
-	if com.ToStoreCommand().ID != "id" {
+	if com.ToStoreCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }
@@ -82,19 +85,19 @@ func TestNewCommand_DELETE(t *testing.T) {
 		t.Error("Expected a store command")
 	}
 
-	if com.cType != CommandDelete {
+	if com.cType != command.CommandDelete {
 		t.Error("Expected a DELETE command")
 	}
 
-	if com.ToStoreCommand().Key != "key" {
+	if com.ToStoreCommand().Key() != "key" {
 		t.Error("Expected key to be 'key'")
 	}
 
-	if com.ToStoreCommand().Value != nil {
+	if com.ToStoreCommand().Value() != nil {
 		t.Error("Expected value to be nil")
 	}
 
-	if com.ToStoreCommand().ID != "id" {
+	if com.ToStoreCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }
@@ -109,19 +112,19 @@ func TestNewCommand_Publish(t *testing.T) {
 		t.Error("Expected a command")
 	}
 
-	if com.cType != CommandPublish {
+	if com.cType != command.CommandPublish {
 		t.Error("Expected a PUBLISH command")
 	}
 
-	if com.ToPubsubCommand().Topic != "channel" {
+	if com.ToPubsubCommand().Topic() != "channel" {
 		t.Error("Expected channel to be 'channel'")
 	}
 
-	if com.ToPubsubCommand().Data != "message" {
+	if com.ToPubsubCommand().Data() != "message" {
 		t.Error("Expected message to be 'message'")
 	}
 
-	if com.ToPubsubCommand().ID != "id" {
+	if com.ToPubsubCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }
@@ -136,19 +139,19 @@ func TestNewCommand_Subscribe(t *testing.T) {
 		t.Error("Expected a command")
 	}
 
-	if com.cType != CommandSubscribe {
+	if com.cType != command.CommandSubscribe {
 		t.Error("Expected a SUBSCRIBE command")
 	}
 
-	if com.ToPubsubCommand().Topic != "channel" {
+	if com.ToPubsubCommand().Topic() != "channel" {
 		t.Error("Expected channel to be 'channel'")
 	}
 
-	if com.ToPubsubCommand().Data != "" {
+	if com.ToPubsubCommand().Data() != "" {
 		t.Error("Expected message to be empty")
 	}
 
-	if com.ToPubsubCommand().ID != "id" {
+	if com.ToPubsubCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }
@@ -163,19 +166,19 @@ func TestNewCommand_Unsubscribe(t *testing.T) {
 		t.Error("Expected a command")
 	}
 
-	if com.cType != CommandUnsubscribe {
+	if com.cType != command.CommandUnsubscribe {
 		t.Error("Expected a UNSUBSCRIBE command")
 	}
 
-	if com.ToPubsubCommand().Topic != "channel" {
+	if com.ToPubsubCommand().Topic() != "channel" {
 		t.Error("Expected channel to be 'channel'")
 	}
 
-	if com.ToPubsubCommand().Data != "" {
+	if com.ToPubsubCommand().Data() != "" {
 		t.Error("Expected message to be empty")
 	}
 
-	if com.ToPubsubCommand().ID != "id" {
+	if com.ToPubsubCommand().ID() != "id" {
 		t.Error("Expected id to be 'id'")
 	}
 }

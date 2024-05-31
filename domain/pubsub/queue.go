@@ -1,5 +1,7 @@
 package pubsub
 
 type Queue interface {
-	Retry(message Message)
+	Enqueue(message Message)
+	Remove(messageId string)
+	Batch() []Message
 }

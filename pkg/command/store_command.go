@@ -1,24 +1,25 @@
 package command
 
 import (
+	"famcache/domain/command"
 	"strconv"
 	"strings"
 )
 
 type StoreCommand struct {
 	// Common fields
-	Type CommandType
-	ID   string
+	cType command.CommandType
+	id    string
 
 	// Get and Delete fields
-	Key string
+	key string
 
 	// Set fields
-	Value *string
-	TTL   *int64
+	value *string
+	ttl   *uint64
 }
 
-func NewStoreCommand(commandType CommandType, query string) *StoreCommand {
+func NewStoreCommand(commandType command.CommandType, query string) command.StoreCommand {
 	parts := strings.Fields(strings.TrimSpace(query))
 
 	if len(parts) < 3 {
@@ -28,14 +29,14 @@ func NewStoreCommand(commandType CommandType, query string) *StoreCommand {
 	queryId := parts[0]
 
 	key := parts[2]
-	var ttl *int64 = nil
+	var ttl *uint64 = nil
 	var value *string = nil
 
-	if commandType == CommandSet {
+	if commandType == command.CommandSet {
 		value = &parts[3]
 
 		if len(parts) == 5 {
-			convTtl, err := strconv.ParseInt(parts[4], 10, 64)
+			convTtl, err := strconv.ParseUint(parts[4], 10, 64)
 			if err != nil {
 				return nil
 			}
@@ -44,10 +45,10 @@ func NewStoreCommand(commandType CommandType, query string) *StoreCommand {
 	}
 
 	return &StoreCommand{
-		Type:  commandType,
-		ID:    queryId,
-		Key:   key,
-		Value: value,
-		TTL:   ttl,
+		cType: commandType,
+		id:    queryId,
+		key:   key,
+		value: value,
+		ttl:   ttl,
 	}
 }

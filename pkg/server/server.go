@@ -4,7 +4,7 @@ import (
 	"famcache/domain/cache"
 	"famcache/domain/logger"
 	"famcache/domain/server"
-	"famcache/pkg/server/actor"
+	"famcache/pkg/actor"
 	"net"
 )
 

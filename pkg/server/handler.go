@@ -3,7 +3,7 @@ package server
 import (
 	"bufio"
 	"famcache/domain/connection"
-	"famcache/pkg/server/command"
+	"famcache/pkg/command"
 	"io"
 )
 
