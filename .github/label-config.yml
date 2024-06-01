@@ -24,9 +24,9 @@ messaging:
 core:
   - changed-files:
       - any-glob-to-any-file:
-      - cmd/**/*.go
-      - pkg/server/*
-      - Dockerfile
+          - cmd/**/*.go
+          - pkg/server/*
+          - Dockerfile
 new-version:
   - changed-files:
       - any-glob-to-any-file: ["VERSION"]
