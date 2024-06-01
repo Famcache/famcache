@@ -1,0 +1,41 @@
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: "*.md"
+ci:
+  - changed-files:
+      - any-glob-to-any-file: [".github/**/*"]
+
+cache:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pkg/actor/get.go
+          - pkg/actor/set.go
+          - pkg/actor/delete.go
+          - pkg/cache/*.go
+          - pkg/command/store_command_*
+messaging:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pkg/pubsub/*
+          - pkg/command/messaging_command_*
+          - pkg/actor/publish.go
+          - pkg/actor/subscribe.go
+          - pkg/actor/unsubscribe.go
+core:
+  - changed-files:
+      - any-glob-to-any-file:
+          - cmd/**/*.go
+          - pkg/server/*
+          - Dockerfile
+new-version:
+  - changed-files:
+      - any-glob-to-any-file: ["VERSION"]
+
+feature:
+  - head-branch: ["^feature", "feature"]
+
+fix:
+  - head-branch: ["^fix", "fix"]
+
+chore:
+  - head-branch: ["^chore", "chore"]
