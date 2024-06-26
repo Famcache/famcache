@@ -1,5 +1,7 @@
 package actor
 
+import "famcache/pkg/command"
+
 func (actor *Actor) ListenFailedMessages() {
 	for {
 		<-actor.queueTicker.C
@@ -21,4 +23,26 @@ func (actor *Actor) ListenFailedMessages() {
 			}
 		}
 	}
+}
+
+func (actor *Actor) ListenJobs() {
+	for {
+		job := <-actor.jobs.Chan()
+		peerId := job.PeerId()
+
+		peer := actor.peers.GetById(peerId)
+
+		if peer == nil {
+			continue
+		}
+
+		command := command.JobExecuteCommand(job.ID())
+
+		peer.Conn().Write([]byte(command))
+	}
+}
+
+func (actor *Actor) Start() {
+	go actor.ListenFailedMessages()
+	go actor.ListenJobs()
 }

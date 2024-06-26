@@ -25,6 +25,8 @@ func (s *Server) Start() error {
 		return domain.ErrCacheStart
 	}
 
+	s.actor.Start()
+
 	for {
 		conn, err := s.listener.Accept()
 

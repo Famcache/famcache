@@ -46,5 +46,11 @@ func (s *Server) handle(peer connection.Peer) {
 
 			s.handleMessagingCommand(peer, action)
 		}
+
+		if com.IsJobCommand() {
+			job := com.ToJobCommand()
+
+			s.handleJobCommand(peer, job)
+		}
 	}
 }
