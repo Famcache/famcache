@@ -5,6 +5,16 @@ ci:
   - changed-files:
       - any-glob-to-any-file: [".github/**/*"]
 
+jobs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pkg/jobs/*.go
+          - domain/jobs/*.go
+          - pkg/actor/register_job.go
+          - pkg/actor/cancel_job.go
+          - pkg/command/job_command.go
+          - pkg/command/job_command_reply.go
+
 cache:
   - changed-files:
       - any-glob-to-any-file:
