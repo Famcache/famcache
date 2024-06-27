@@ -1,6 +1,9 @@
 package actor
 
-import "famcache/pkg/command"
+import (
+	"famcache/domain/connection"
+	"famcache/pkg/command"
+)
 
 func (actor *Actor) ListenFailedMessages() {
 	for {
@@ -40,6 +43,21 @@ func (actor *Actor) ListenJobs() {
 
 		peer.Conn().Write([]byte(command))
 	}
+}
+
+func (actor *Actor) DisconnectPeer(peer connection.Peer) {
+	logger := *actor.logger
+
+	actor.peers.Remove(peer)
+	jobs := actor.jobs.Jobs()
+
+	for _, job := range jobs {
+		if job.PeerId() == peer.ID() {
+			actor.jobs.Cancel(job.ID())
+		}
+	}
+
+	logger.Info("Client disconnected: " + peer.ID())
 }
 
 func (actor *Actor) Start() {

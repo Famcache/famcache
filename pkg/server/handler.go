@@ -15,7 +15,7 @@ func (s *Server) handle(peer connection.Peer) {
 
 		if err != nil {
 			if err == io.EOF {
-				(*s.actor.Peers()).Remove(peer)
+				s.actor.DisconnectPeer(peer)
 				return
 			}
 
