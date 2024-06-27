@@ -28,3 +28,7 @@ func SubscribeCommand(id, topic string) string {
 func UnsubscribeCommand(id, topic string) string {
 	return fmt.Sprintf("%s UNSUBSCRIBE %s", id, topic)
 }
+
+func JobExecuteCommand(jobId string) string {
+	return fmt.Sprintf("JOB_EXECUTE %s\n", jobId)
+}

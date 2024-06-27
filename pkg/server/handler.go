@@ -15,7 +15,7 @@ func (s *Server) handle(peer connection.Peer) {
 
 		if err != nil {
 			if err == io.EOF {
-				(*s.actor.Peers()).Remove(peer)
+				s.actor.DisconnectPeer(peer)
 				return
 			}
 
@@ -45,6 +45,12 @@ func (s *Server) handle(peer connection.Peer) {
 			action := com.ToPubsubCommand()
 
 			s.handleMessagingCommand(peer, action)
+		}
+
+		if com.IsJobCommand() {
+			job := com.ToJobCommand()
+
+			s.handleJobCommand(peer, job)
 		}
 	}
 }
