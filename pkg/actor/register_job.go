@@ -13,7 +13,5 @@ func (actor *Actor) RegisterJob(peer connection.Peer, query command.JobCommand) 
 
 	logger.Info(fmt.Sprintf("Job registered with id %s", id))
 
-	reply := fmt.Sprintf("%s %s", query.ID(), id)
-
-	query.ReplyOK(peer.Conn(), reply)
+	query.ReplyOK(peer.Conn(), id)
 }

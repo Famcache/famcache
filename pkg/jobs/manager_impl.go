@@ -43,12 +43,6 @@ func (jm *JobsManager) Chan() <-chan job.Job {
 	return jm.triggerChan
 }
 
-func (jm *JobsManager) Jobs() []job.Job {
-	jobs := make([]job.Job, len(jm.jobs))
-
-	for _, job := range jm.jobs {
-		jobs = append(jobs, job)
-	}
-
-	return jobs
+func (jm *JobsManager) Jobs() *map[string]mJob.Job {
+	return &jm.jobs
 }
