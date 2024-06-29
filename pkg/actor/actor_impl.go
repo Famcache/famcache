@@ -51,7 +51,7 @@ func (actor *Actor) DisconnectPeer(peer connection.Peer) {
 	actor.peers.Remove(peer)
 	jobs := actor.jobs.Jobs()
 
-	for _, job := range jobs {
+	for _, job := range *jobs {
 		if job.PeerId() == peer.ID() {
 			actor.jobs.Cancel(job.ID())
 		}
